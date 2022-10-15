@@ -67,4 +67,31 @@ const signup = async (req,res)=>{
       res.send({message:errorMessage, status:false})
   })
 }
-module.exports={signup}
+const signin =  async (req,res) => {
+  let { email, password } = req.body;
+  admin.auth().signInWithEmailAndPassword(email,password)
+  .then((userCredential) => {
+    let user = userCredential.user;
+    res.send({message:user, status:true})
+  })
+  .catch((error) => {
+    let errorCode = error.code;
+    let errorMessage = error.message;
+    res.send({message:errorMessage, status:false})
+  });
+}
+const updateProfile =  async (req,res) => {
+  let { phoneNumber, displayName, photoURL, uid } = req.body;
+  if (!photoURL.length>0) {
+    photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
+  }
+  admin.auth().updateUser(uid, {phoneNumber, displayName, photoURL})
+  .then((newRecord) => {
+    res.send({message:"Updated successfully", user:newRecord.toJSON(), status:true})
+  })
+  .catch((error) => {
+    let errorMessage = error.message;
+    res.send({message:errorMessage, status:false})
+  });
+}
+module.exports={signup, signin,updateProfile}
