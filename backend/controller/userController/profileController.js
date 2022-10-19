@@ -17,7 +17,9 @@ const signup = async (req,res)=>{
       admin.auth().generateEmailVerificationLink(user.email)
       .then((link) => {
         const uid= user.uid
-        admin.firestore().collection('users').doc(uid).set({uid, balance:0}).then((dbinfo)=>{
+        const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
+        admin.firestore().collection('users').doc(uid).set({uid, balance:0, account_no})
+        .then((dbinfo)=>{
           const mailoptions={
             from: process.env.EMAIL,
             to:user.email,
@@ -67,19 +69,6 @@ const signup = async (req,res)=>{
       res.send({message:errorMessage, status:false})
   })
 }
-const signin =  async (req,res) => {
-  let { email, password } = req.body;
-  admin.auth().signInWithEmailAndPassword(email,password)
-  .then((userCredential) => {
-    let user = userCredential.user;
-    res.send({message:user, status:true})
-  })
-  .catch((error) => {
-    let errorCode = error.code;
-    let errorMessage = error.message;
-    res.send({message:errorMessage, status:false})
-  });
-}
 const updateProfile =  async (req,res) => {
   let { phoneNumber, displayName, photoURL, uid } = req.body;
   if (!photoURL.length>0) {
@@ -94,4 +83,4 @@ const updateProfile =  async (req,res) => {
     res.send({message:errorMessage, status:false})
   });
 }
-module.exports={signup, signin,updateProfile}
+module.exports={signup, updateProfile}
