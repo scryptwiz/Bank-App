@@ -1,4 +1,3 @@
-const admin = require("../../db/firebase");
 const nodemailer = require("nodemailer");
 require('dotenv').config()
 
@@ -11,76 +10,17 @@ const signup = async (req,res)=>{
     }
   })
   let { email, password }=req.body;
-    admin.auth().createUser({email, password,emailVerified: false})
-    .then((userCredential) => {
-      const user = userCredential;
-      admin.auth().generateEmailVerificationLink(user.email)
-      .then((link) => {
-        const uid= user.uid
-        const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
-        admin.firestore().collection('users').doc(uid).set({uid, balance:0, account_no})
-        .then((dbinfo)=>{
-          const mailoptions={
-            from: process.env.EMAIL,
-            to:user.email,
-            subject: "Email Verification From Banka App",
-            text:  `Your Email Verification link is ${link}`
-          }
-          transporter.sendMail(mailoptions,function(err,info){
-            if (err){
-              admin.auth().deleteUser(user.uid)
-              .then(() => {
-                admin.firestore().collection("users").doc(uid).delete().then(() => {
-                  res.send({message:err.message, status:false})
-                }).catch((error) => {
-                  res.send({message:error.message, status:false})
-                });
-              })
-              .catch((err) => {
-                res.send({message:err.message, status:false})
-              });
-              return;
-            }else {
-              res.send({user, dbinfo, info:info.response})
-            }
-          })
-        }).catch(error=>{
-          admin.auth().deleteUser(user.uid)
-          .then(() => {
-            res.send({message:error.message, status:false})
-          })
-          .catch((err) => {
-            res.send({message:err.message, status:false})
-          });
-        })
-      })
-      .catch((error) => {
-        admin.auth().deleteUser(user.uid)
-          .then(() => {
-            res.send({message:error.message, status:false})
-          })
-          .catch((err) => {
-            res.send({message:err.message, status:false})
-          });
-      });
-    })
-    .catch((error) => {
-      const errorMessage = error.message;
-      res.send({message:errorMessage, status:false})
-  })
+  const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
+  if (email&&password&&account_no) {
+    userMo
+  } else {
+    res.json({message:"All fields must be filled", status:false})
+  }
 }
 const updateProfile =  async (req,res) => {
   let { phoneNumber, displayName, photoURL, uid } = req.body;
   if (!photoURL.length>0) {
     photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
   }
-  admin.auth().updateUser(uid, {phoneNumber, displayName, photoURL})
-  .then((newRecord) => {
-    res.send({message:"Updated successfully", user:newRecord.toJSON(), status:true})
-  })
-  .catch((error) => {
-    let errorMessage = error.message;
-    res.send({message:errorMessage, status:false})
-  });
 }
 module.exports={signup, updateProfile}
