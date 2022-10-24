@@ -1,6 +1,6 @@
 const express = require('express');
 const { signup, updateProfile } = require('../controller/userController/profileController');
-const { fetchTransaction, transferMoney } = require('../controller/userController/transactionController');
+// const { fetchTransaction, transferMoney } = require('../controller/userController/transactionController');
 const routes = express.Router()
 
 // User Route

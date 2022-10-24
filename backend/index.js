@@ -1,5 +1,5 @@
 const express = require('express');
-// const { routes } = require('./routes/userRoutes');
+const { routes } = require('./routes/userRoutes');
 const app = express();
 require('dotenv').config();
 const PORT = process.env.PORT
@@ -19,6 +19,6 @@ mongoose.Promise = global.Promise;
 app.get('/', (req,res) =>{
     res.send("Hello")
 })
-// app.use('/api', routes)
+app.use('/api', routes)
 
 app.listen(PORT)
