@@ -4,15 +4,16 @@ require('dotenv').config()
 
 const signup = async (req,res)=>{
   let { username, email, password }=req.body;
-  const transporter = nodemailer.createTransport({
-    service:"hotmail",
+  let mailTransporter = nodemailer.createTransport({
+    service: 'gmail',
+    host: "smtp.gmail.com",
     auth: {
       user:process.env.EMAIL,
       pass:process.env.PASS
     }
   })
   let mailOptions = {
-    from: '"Banka App"',
+    from: "Banka App",
     to: `${email}`,
     subject: "Banka App Account Verification ✔",
     text: "Here is your verification link",
@@ -24,11 +25,11 @@ const signup = async (req,res)=>{
     signup.save(err=>{
       if(!err) {
         try {
-          transporter.sendMail(mailOptions, function(error, info){
+          mailTransporter.sendMail(mailOptions, function(error, info){
             if (error) {
               res.json({message:"Signed Up Successfully make sure you verify your email", status: true});
             } else {
-              res.json({message:"Signed Up Successfully", info:info.response,status: true});
+              res.json({message:"Signed Up Successfully", status: true});
             }
           });
         } catch(err){
