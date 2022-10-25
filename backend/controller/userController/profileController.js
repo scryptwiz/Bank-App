@@ -29,7 +29,13 @@ const signup = async (req,res)=>{
             if (error) {
               res.json({message:"Signed Up Successfully make sure you verify your email", status: true});
             } else {
-              res.json({message:"Signed Up Successfully", status: true});
+              try {
+                usersModel.findOneAndUpdate({email}, {verified:true}, { new: true });
+                res.json({message:"Signed Up Successfully" ,status: true});
+              } catch (error) {
+                console.log(error);
+                res.json({message:"Signed Up Successfully But Not Verified", status: true});
+              }
             }
           });
         } catch(err){
