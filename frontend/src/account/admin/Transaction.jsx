@@ -10,7 +10,7 @@ export const Transaction = () => {
             <div className="flex flex-col flex-1 w-full">
                 <Header />
                 <main className="h-full overflow-y-auto dark:bg-black">
-                    <div className="container px-6 md:py-4 lg:py-10 mx-auto grid">
+                    <div className="container px-6 py-3 mx-auto grid">
                         <div className='lg:flex gap-2 items-center my-6'>
                             <h2
                                 className="text-2xl font-semibold text-gray-700 dark:text-gray-200"

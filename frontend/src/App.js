@@ -9,6 +9,9 @@ import { ForgotPassword } from './account/admin/ForgotPassword';
 import { Account } from './account/admin/Account';
 import { Transaction } from './account/admin/Transaction';
 import { Profile } from './account/Profile';
+import { Notification } from './account/admin/Notification';
+import { Insights } from './account/admin/Insights';
+import { Help } from './account/admin/Help';
 
 function App() {
   return (
@@ -46,6 +49,18 @@ function App() {
             <Route 
              path="/my-profile"
              element={<Profile />}
+            />
+            <Route 
+             path="/notifications"
+             element={<Notification />}
+            />
+            <Route 
+             path="/insights"
+             element={<Insights />}
+            />
+            <Route 
+             path="/help"
+             element={<Help />}
             />
           </Routes>
       </BrowserRouter>
