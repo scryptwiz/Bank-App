@@ -13,3 +13,16 @@ export const userReducer = (state, action) => {
             return state;
     }
 }
+
+
+export const UserContextProvider = ({ children }) => {
+    const [state, dispatch] = useReducer(userReducer, {
+        users: null
+    })
+
+    return (
+        <UserContext.Provider value={{...state, dispatch}}>
+            { children }
+        </UserContext.Provider>
+    )
+}
