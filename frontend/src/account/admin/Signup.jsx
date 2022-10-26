@@ -1,9 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useFormik, error } from 'formik';
 import * as Yup from 'yup';
+import { useUserContext } from '../../hooks/useUserContext';
 
 export const Signup = () => {
+  // const { dispatch } = useUserContext();
+
+
   const initialValues = {
     username: '',
     email: '',
@@ -12,6 +16,23 @@ export const Signup = () => {
   }
   const onSubmit = values => {
     console.log(values);
+    // navigate('/signin')
+    // const user = values;
+    // const response = await fetch('/api/workouts', {
+    //   method: 'POST',
+    //   body: JSON.stringify(user),
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   }
+    // });
+    // const json = await response.json();
+    // console.log(json);
+    // if (!json) {
+    //   console.log('error');
+    // } else {
+    //   dispatch({type: 'CREATE_USER', payload: json.user});
+    //   console.log('New user added', json);
+    // }
   }
   const validationSchema = Yup.object({
 
@@ -70,7 +91,7 @@ export const Signup = () => {
                       placeholder="***************"
                       type="password" name='password' onChange={formik.handleChange} value={formik.values.password}
                     />
-                    { formik.touched.username && formik.errors.username && <small className='text-red-500'>{formik.errors.password}</small> }
+                    { formik.touched.password && formik.errors.password && <small className='text-red-500'>{formik.errors.password}</small> }
                   </div>
                   <div>
                     <label className="text-gray-700 text-sm font-semibold">Confirm Password</label>

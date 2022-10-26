@@ -1,14 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { MobileSidebar } from './Sidebar'
 
 export const Header = () => {
+  const [status, setStatus] = useState(false)
   return (
     <header class="z-10 py-4 bg-white shadow-md dark:bg-gray-800">
+      <MobileSidebar status={status}/>
     <div
       class="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300"
     >
       <button
         class="p-1 mr-5 -ml-1 rounded-md md:hidden focus:outline-none focus:shadow-outline-purple"
-        aria-label="Menu"
+        aria-label="Menu" onClick={()=>setStatus(!status)}
       >
         <svg
           class="w-6 h-6"
@@ -23,11 +26,12 @@ export const Header = () => {
           ></path>
         </svg>
       </button>
-      <div class="flex justify-center flex-1 lg:mr-32">
+      {/* <div class="flex justify-center flex-1 sm:w-full lg:mr-32"> */}
         <div
-          class="relative w-full max-w-xl mr-6 focus-within:text-purple-500 px-4"
+          class=" flex w-7/12 lg:w-5/12 gap-3 lg:mr-16 py-2 lg:py-4 dark:bg-gray-700 focus-within:text-purple-500 bg-gray-100 border-0 rounded-md"
         >
-          <div class="absolute inset-y-0 flex items-center pl-2">
+         {/* Hello */}
+          <div class="flex items-center pl-4">
             <svg
               class="w-4 h-4"
               aria-hidden="true"
@@ -42,13 +46,13 @@ export const Header = () => {
             </svg>
           </div>
           <input
-            class="w-full p-4 pl-8 pr-2 text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-white focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
+            class="w-full text-sm text-gray-700 placeholder-gray-600 bg-gray-100 border-0 rounded-md dark:placeholder-gray-500 dark:focus:shadow-outline-gray dark:focus:placeholder-gray-600 dark:bg-gray-700 dark:text-gray-200 focus:placeholder-gray-500 focus:bg-gray-700 focus:border-purple-300 focus:outline-none focus:shadow-outline-purple form-input"
             type="text"
             placeholder="Search for projects"
             aria-label="Search"
           />
         </div>
-      </div>
+      {/* </div> */}
       <ul class="flex items-center flex-shrink-0 space-x-6">
         <li class="flex">
           <button
@@ -153,7 +157,7 @@ export const Header = () => {
           >
             <img
               class="object-cover w-8 h-8 rounded-full"
-              src="https://images.unsplash.com/photo-1502378735452-bc7d86632805?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&fit=max&s=aa3a807e1bbdfd4364d1f449eaa96d82"
+              src="https://pbs.twimg.com/profile_images/1551272248903966721/YXNtcsNT_400x400.jpg"
               alt=""
               aria-hidden="true"
             />

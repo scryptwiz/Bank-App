@@ -1,7 +1,8 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 export const Sidebar = () => {
+    const pathname = useLocation().pathname;
     return (
         <div>
             <aside
@@ -16,16 +17,14 @@ export const Sidebar = () => {
                     </a>
                     <ul class="mt-6">
                         <li class="relative px-6 py-3">
-                            <span
-                                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                                aria-hidden="true"
+                        <span
+                                aria-hidden="true" className={`${pathname === '/dashboard' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
                             ></span>
                             <a
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                                href="index.html"
+                                className={`${pathname === '/dashboard' ? 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100' : 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 text-gray-400' }`}
                             >
                                 <svg
-                                    class="w-5 h-5"
+                                    className='w-5 h-5'
                                     aria-hidden="true"
                                     fill="none"
                                     stroke-linecap="round"
@@ -38,18 +37,20 @@ export const Sidebar = () => {
                                         d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
                                     ></path>
                                 </svg>
-                                <span class="ml-4">Dashboard</span>
+                                <Link to="/dashboard">Dashboard</Link>
                             </a>
                         </li>
                     </ul>
                     <ul>
                         <li class="relative px-6 py-3">
                             <a
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                href="forms.html"
+                                className={`${pathname === '/my-account' ? 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100' : 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 text-gray-400' }`}
                             >
+                                  <span
+                                aria-hidden="true" className={`${pathname === '/my-account' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
+                            ></span>
                                 <svg
-                                    class="w-5 h-5"
+                                    className='w-5 h-5'
                                     aria-hidden="true"
                                     fill="none"
                                     stroke-linecap="round"
@@ -62,16 +63,18 @@ export const Sidebar = () => {
                                         d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
                                     ></path>
                                 </svg>
-                                <span class="ml-4">Account</span>
+                                <Link to="/my-account">Account</Link>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
                             <a
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                href="cards.html"
+                                className={`${pathname === '/my-transactions' ? 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100' : 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 text-gray-400' }`}
                             >
+                                  <span
+                                aria-hidden="true" className={`${pathname === '/my-transactions' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
+                            ></span>
                                 <svg
-                                    class="w-5 h-5"
+                                    className='w-5 h-5'
                                     aria-hidden="true"
                                     fill="none"
                                     stroke-linecap="round"
@@ -84,16 +87,19 @@ export const Sidebar = () => {
                                         d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
                                     ></path>
                                 </svg>
-                                <span class="ml-4">My Transaction</span>
+                                <Link to="/my-transactions">My Transaction</Link>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
                             <a
-                                class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                href="charts.html"
+                                className={`${pathname === '/my-profile' ? 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100' : 'inline-flex gap-4 items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 text-gray-400' }`}
                             >
+                                  <span
+                                aria-hidden="true" 
+                                className={`${pathname === '/my-profile' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
+                            ></span>
                                 <svg
-                                    class="w-5 h-5"
+                                    className='w-5 h-5'
                                     aria-hidden="true"
                                     fill="none"
                                     stroke-linecap="round"
@@ -107,7 +113,7 @@ export const Sidebar = () => {
                                     ></path>
                                     <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
                                 </svg>
-                                <span class="ml-4">Profile</span>
+                                <Link to="/my-profile">Profile</Link>
                             </a>
                         </li>
                         <li class="relative px-6 py-3">
@@ -205,7 +211,15 @@ export const Sidebar = () => {
                     </div>
                 </div>
             </aside>
-            <aside
+        </div>
+    )
+}
+
+export const MobileSidebar = (props) => {
+    const pathname = useLocation().pathname;
+    return (
+        <div>
+             {props.status && <aside
                 class="fixed inset-y-0 z-20 flex-shrink-0 w-64 mt-16 overflow-y-auto bg-white dark:bg-gray-800 md:hidden"
             >
                 <div class="py-4 text-gray-500 dark:text-gray-400">
@@ -217,14 +231,14 @@ export const Sidebar = () => {
                     </a>
                     <ul class="mt-6">
                         <li class="relative px-6 py-3">
-                            <span
-                                class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg"
-                                aria-hidden="true"
-                            ></span>
-                            <a
-                                class="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100"
-                                href="index.html"
+                            {/* className="inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100" */}
+                            <Link
+                                 className='inline-flex items-center w-full text-sm font-semibold text-gray-800 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200 dark:text-gray-100'
+                                to="/dashboard"
                             >
+                            <span
+                                aria-hidden="true" className={`${pathname === '/dashboard' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
+                            ></span>
                                 <svg
                                     class="w-5 h-5"
                                     aria-hidden="true"
@@ -240,15 +254,18 @@ export const Sidebar = () => {
                                     ></path>
                                 </svg>
                                 <span class="ml-4">Dashboard</span>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                     <ul>
                         <li class="relative px-6 py-3">
-                            <a
+                            <Link
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                href="forms.html"
+                                to="/my-account"
                             >
+                                  <span
+                                aria-hidden="true" className={`${pathname === '/my-account' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
+                            ></span>
                                 <svg
                                     class="w-5 h-5"
                                     aria-hidden="true"
@@ -264,13 +281,15 @@ export const Sidebar = () => {
                                     ></path>
                                 </svg>
                                 <span class="ml-4">Account</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="relative px-6 py-3">
-                            <a
+                            <Link to="/my-transactions"
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                href="cards.html"
                             >
+                                  <span
+                                aria-hidden="true" className={`${pathname === '/my-transactions' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
+                            ></span>
                                 <svg
                                     class="w-5 h-5"
                                     aria-hidden="true"
@@ -286,13 +305,16 @@ export const Sidebar = () => {
                                     ></path>
                                 </svg>
                                 <span class="ml-4">My Transactions</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="relative px-6 py-3">
-                            <a
+                            <Link
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                href="charts.html"
+                                to="/my-profile"
                             >
+                                  <span
+                                aria-hidden="true" className={`${pathname === '/my-profile' ? 'absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg' : 'hidden'}`}
+                            ></span>
                                 <svg
                                     class="w-5 h-5"
                                     aria-hidden="true"
@@ -309,12 +331,12 @@ export const Sidebar = () => {
                                     <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path>
                                 </svg>
                                 <span class="ml-4">Profile</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="relative px-6 py-3">
-                            <a
+                            <Link
                                 class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
-                                href="buttons.html"
+                                to=""
                             >
                                 <svg
                                     class="w-5 h-5"
@@ -331,7 +353,7 @@ export const Sidebar = () => {
                                     ></path>
                                 </svg>
                                 <span class="ml-4">Notifications</span>
-                            </a>
+                            </Link>
                         </li>
                         <li class="relative px-6 py-3">
                             <a
@@ -385,7 +407,7 @@ export const Sidebar = () => {
                         </button>
                     </div>
                 </div>
-            </aside>
+            </aside>}
         </div>
     )
 }
