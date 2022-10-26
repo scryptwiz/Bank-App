@@ -67,63 +67,63 @@ export const Profile = () => {
                                         aria-hidden="true"
                                     />
                                 </div>
-                                <div className='flex flex-col gap-4 mb-5'>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Username: </p>
+                                <div className='flex flex-col gap-3 lg:gap-4 leading-10 mb-5'>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Username:</p>
                                         <span className='dark:text-gray-200 text-sm'>Folajimi</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Email: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Email:</p>
                                         <span className='dark:text-gray-200 text-sm'>fola@gmail.com</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Phone Number: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Phone Number:</p>
                                         <span className='dark:text-gray-200 text-sm'>07048502396</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>DOB: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>DOB:</p>
                                         <span className='dark:text-gray-200 text-sm'>September, 2022</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Country: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Country:</p>
                                         <span className='dark:text-gray-200 text-sm'>Nigeria</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>State: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>State:</p>
                                         <span className='dark:text-gray-200 text-sm'>Oyo State</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Address: </p>
-                                        <span className='dark:text-gray-200 text-sm text-right'>Ogbomoso, Oyo State, Nigeria.</span>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Address:</p>
+                                        <span className='dark:text-gray-200 text-sm ml-10'>Ogbomoso, Oyo State, Nigeria.</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Gender: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Gender:</p>
                                         <span className='dark:text-gray-200 text-sm'>Male</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Account Number: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Account Number:</p>
                                         <span className='dark:text-gray-200 text-sm'>6262629087</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Name: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Name:</p>
                                         <span className='dark:text-gray-200 text-sm'>Folagbade</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Phone Number: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Phone Number:</p>
                                         <span className='dark:text-gray-200 text-sm'>08066573156</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Address: </p>
-                                        <span className='dark:text-gray-200 text-sm text-right'>Ogbomoso, Oyo State, Nigeria</span>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Address:</p>
+                                        <span className='dark:text-gray-200 text-sm ml-10'>Ogbomoso, Oyo State, Nigeria</span>
                                     </div>
-                                    <div className='flex justify-between gap-5'>
-                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Relationship: </p>
+                                    <div className='flex lg:justify-between lg:gap-12 gap-4'>
+                                        <p className='font-semibold dark:text-gray-300 text-sm w-36'>Next Of Kin Relationship:</p>
                                         <span className='dark:text-gray-200 text-sm'>Special Friend</span>
                                     </div>
                                 </div>
                             </div>
                                     <button type='submit'
-                                        className="block w-32 lg:w-36 ml-96 px-4 py-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onClick={() => setTitle('update-profile')}
+                                        className="block w-32 lg:ml-96 mt-6 lg:mt-0 px-4 py-2 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" onClick={() => setTitle('update-profile')}
                                     >
                                         Edit Profile
                                     </button>
