@@ -12,30 +12,24 @@ const signup = async (req,res)=>{
       pass:process.env.PASS
     }
   })
-  let mailOptions = {
-    from: "Banka App",
-    to: `${email}`,
-    subject: "Banka App Account Verification ✔",
-    text: "Here is your verification link",
-    html: "<a href='http://localhost:2600/api/user/verify/'>Verify Your Email</a>",
-  };
   const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
   if (email&&password&&account_no) {
     const signup = new usersModel({username, email, account_no, password})
-    signup.save(err=>{
+    signup.save((err,result)=>{
       if(!err) {
+        let verificationLink = `http://localhost:2600/api/user/verifyUser/${result._id}`
         try {
-          mailTransporter.sendMail(mailOptions, function(error, info){
+          mailTransporter.sendMail({
+            from: "Banka App",
+            to: `${email}`,
+            subject: "Banka App Account Verification ✔",
+            text: "Here is your verification link",
+            html: `<a href=${verificationLink}>Verify Your Email</a>`,
+          }, function(error){
             if (error) {
               res.json({message:"Signed Up Successfully make sure you verify your email", status: true});
             } else {
-              try {
-                usersModel.findOneAndUpdate({email}, {verified:true}, { new: true });
-                res.json({message:"Signed Up Successfully" ,status: true});
-              } catch (error) {
-                console.log(error);
-                res.json({message:"Signed Up Successfully But Not Verified", status: true});
-              }
+                res.json({message:"Signed Up Successfully A Mail Has Been Sent To You!" ,status: true});
             }
           });
         } catch(err){
@@ -43,9 +37,9 @@ const signup = async (req,res)=>{
         }
     } else if (err) {
         if (err.keyPattern.email==1) {
-            res.json({message:"Email Already Existed", status: false})
+            res.json({message:"Email Already Exist", status: false})
         } else if (err.keyPattern.username==1) {
-          res.json({message:"Username Already Existed", status: false})
+          res.json({message:"Username Already Exist", status: false})
         } else {
             res.json({message:err.message, status:false})
         }
@@ -56,10 +50,32 @@ const signup = async (req,res)=>{
   }
 }
 
+const verifyUser = (req,res) => {
+  let id = req.params['id']
+  usersModel.findById(id, (err)=>{
+    if (err){
+      if (err.name==="CastError") {
+        res.json({message:"Invalid User", status:false})
+      } else {
+        res.json({message: err.message, status:false})
+      }
+    }
+    else{
+      usersModel.findByIdAndUpdate(`${id}`, {verified:true}, (err,result)=>{
+        if(err){
+          res.send({message:err.message, status:false})
+        }
+        else{
+          res.json({message:"Email Verified Successfully", status:true})
+        }
+      })
+    }
+  })
+}
 const updateProfile =  async (req,res) => {
   let { username, photoURL } = req.body;
   if (!photoURL.length>0) {
     photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
   }
 }
-module.exports={signup, updateProfile}
+module.exports={signup, updateProfile, verifyUser}
