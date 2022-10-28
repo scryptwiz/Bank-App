@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const nodemailer = require("nodemailer");
 const usersModel = require("../../models/usersModel");
 require('dotenv').config()
@@ -49,7 +51,6 @@ const signup = async (req,res)=>{
     res.json({message:"All fields must be filled", status:false})
   }
 }
-
 const verifyUser = (req,res) => {
   let id = req.params['id']
   usersModel.findById(id, (err)=>{
@@ -61,7 +62,7 @@ const verifyUser = (req,res) => {
       }
     }
     else{
-      usersModel.findByIdAndUpdate(`${id}`, {verified:true}, (err,result)=>{
+      usersModel.findByIdAndUpdate(`${id}`, {verified:true}, (err)=>{
         if(err){
           res.send({message:err.message, status:false})
         }
@@ -72,10 +73,33 @@ const verifyUser = (req,res) => {
     }
   })
 }
+const signin = (req,res) => {
+  let {email, password} = req.body;
+  usersModel.findOne({email}, async (err,result)=>{
+    if (err) {
+      res.json({message: 'Network Error', status: false, err})
+    } else if (result) {
+      let validatePassword = await bcrypt.compare(password, result.password)
+      if(validatePassword){
+        jwt.sign({email}, process.env.JWT_SECRET, { expiresIn: "2h" }, (err, token)=>{
+            if(err){
+                {err.message=="jwt expired"? res.json({message: "Session timed out, kindly login again", status: false}) : res.json({message:err.message, status:false})}
+            } else {
+                res.json({message:"Login Succesfully", token, result , status: true})
+            }
+          })
+      } else {
+        res.json({message: "Incorrect Password", status: false})
+      }
+    } else if (result==null) {
+      res.json({message: "Email not registered", status:false})
+    }
+  })
+}
 const updateProfile =  async (req,res) => {
   let { username, photoURL } = req.body;
   if (!photoURL.length>0) {
     photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
   }
 }
-module.exports={signup, updateProfile, verifyUser}
+module.exports={signup, updateProfile, verifyUser, signin}
