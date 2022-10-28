@@ -1,8 +1,7 @@
-import React from 'react'
 import { Header } from '../../public/Header'
 import { Sidebar } from '../../public/Sidebar'
 
-export const Insights = () => {
+export const Settings = () => {
     return (
         <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
             <Sidebar />

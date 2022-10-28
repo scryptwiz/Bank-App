@@ -59,6 +59,10 @@ function App() {
              element={<Insights />}
             />
             <Route 
+             path="/settings"
+             element={<Insights />}
+            />
+            <Route 
              path="/help"
              element={<Help />}
             />
