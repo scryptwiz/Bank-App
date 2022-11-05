@@ -1,7 +1,8 @@
-import React from 'react'
-import { Header } from '../../public/Header'
-import { Sidebar } from '../../public/Sidebar'
-import { IncomeChart } from './IncomeChart'
+import React from 'react';
+import { Header } from '../public/Header';
+import { Sidebar } from '../public/Sidebar';
+// import { IncomeChart } from './IncomeChart';
+
 
 export const Dashboard = () => {
   return (

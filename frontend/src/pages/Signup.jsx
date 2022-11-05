@@ -1,12 +1,13 @@
 import React from 'react';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import { useFormik, error } from 'formik';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSnackbar } from "notistack";
+import { useFormik } from 'formik';
+import axios from 'axios';
 import * as Yup from 'yup';
-import { useUserContext } from '../../hooks/useUserContext';
 
 export const Signup = () => {
-  // const { dispatch } = useUserContext();
-
+  const { enqueueSnackbar } = useSnackbar()
+// const navigate = useNavigate();
 
   const initialValues = {
     username: '',
@@ -16,23 +17,17 @@ export const Signup = () => {
   }
   const onSubmit = values => {
     console.log(values);
-    // navigate('/signin')
-    // const user = values;
-    // const response = await fetch('/api/workouts', {
-    //   method: 'POST',
-    //   body: JSON.stringify(user),
-    //   headers: {
-    //     'Content-Type': 'application/json'
-    //   }
-    // });
-    // const json = await response.json();
-    // console.log(json);
-    // if (!json) {
-    //   console.log('error');
-    // } else {
-    //   dispatch({type: 'CREATE_USER', payload: json.user});
-    //   console.log('New user added', json);
-    // }
+    axios.post('http://localhost:2600/api/user/signup', values).then(res=> {
+      if (res.data.status) {
+        console.log('res', res, 'resData', res.data);
+        enqueueSnackbar(`${res.data.message}`, { variant: "success" });
+      }else {
+        console.log('error');
+        enqueueSnackbar(`${res.data.message}`, { variant: "error" });
+      }
+    }).catch((err => {
+      console.log(err);
+    }))
   }
   const validationSchema = Yup.object({
 

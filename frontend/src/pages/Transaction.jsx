@@ -1,7 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Header } from '../../public/Header'
-import { Sidebar } from '../../public/Sidebar'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Header } from '../public/Header';
+import { Sidebar } from '../public/Sidebar';
 
 export const Transaction = () => {
     return (

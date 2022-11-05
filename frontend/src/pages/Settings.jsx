@@ -1,5 +1,5 @@
-import { Header } from '../../public/Header'
-import { Sidebar } from '../../public/Sidebar'
+import { Header } from "../public/Header";
+import { Sidebar } from "../public/Sidebar";
 
 export const Settings = () => {
     return (
