@@ -1,7 +1,7 @@
-import React from 'react'
-import { Header } from '../../public/Header'
-import { Sidebar } from '../../public/Sidebar'
-import { Notifi } from './component/Notifi'
+import React from 'react';
+import { Notifi }  from '../components/Notifi';
+import { Header } from '../public/Header';
+import { Sidebar } from '../public/Sidebar';
 
 export const Notification = () => {
     return (
