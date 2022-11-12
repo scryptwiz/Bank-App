@@ -1,43 +1,28 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require("nodemailer");
 const usersModel = require("../../models/usersModel");
-require('dotenv').config()
+const mail = require('../mail');
 
 const signup = async (req,res)=>{
   let { username, email, password }=req.body;
-  let mailTransporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.com",
-    auth: {
-      user:process.env.EMAIL,
-      pass:process.env.PASS
-    }
-  })
+  const otp = Math.floor(Math.random()*90000) + 10000;
+  let currentDateObj = new Date();
+  let _otpTimeLimit = currentDateObj.getTime()+3*60000;
   const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
+
   if (email&&password&&account_no) {
     const signup = new usersModel({username, email, account_no, password})
-    signup.save((err,result)=>{
+    signup.save( async (err,result)=>{
       if(!err) {
-        let verificationLink = `http://localhost:2600/api/user/verifyUser/${result._id}`
-        try {
-          mailTransporter.sendMail({
-            from: "Banka App",
-            to: `${email}`,
-            subject: "Banka App Account Verification ✔",
-            text: "Here is your verification link",
-            html: `<a href=${verificationLink}>Verify Your Email</a>`,
-          }, function(error){
-            if (error) {
-              res.json({message:"Signed Up Successfully make sure you verify your email", status: true});
-            } else {
-                res.json({message:"Signed Up Successfully A Mail Has Been Sent To You!" ,status: true});
-            }
-          });
-        } catch(err){
-          res.json({message:err.message, status: false});
+        let verification = await mail({data,otp})
+        let _update = {$set:{expire_time:_otpTimeLimit, token:otp}}
+        const update_code = await usersModel.updateOne({email}, _update);
+        if(update_code ){
+            res.json({message: `Signed up successfully ${verification}`, status:true})
+        }else{
+            res.json({message:"Signed up successfully, Please verify your account",status:true})
         }
-    } else if (err) {
+      } else if (err) {
         if (err.keyPattern.email==1) {
             res.json({message:"Email Already Exist", status: false})
         } else if (err.keyPattern.username==1) {
@@ -45,7 +30,7 @@ const signup = async (req,res)=>{
         } else {
             res.json({message:err.message, status:false})
         }
-    }
+      }
     })
   } else {
     res.json({message:"All fields must be filled", status:false})
