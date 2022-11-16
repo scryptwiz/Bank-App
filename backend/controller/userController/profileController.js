@@ -12,9 +12,9 @@ const signup = async (req,res)=>{
 
   if (email&&password&&account_no) {
     const signup = new usersModel({username, email, account_no, password})
-    signup.save( async (err,result)=>{
+    signup.save( async (err)=>{
       if(!err) {
-        let verification = await mail({data,otp})
+        let verification = await mail({email,otp})
         let _update = {$set:{expire_time:_otpTimeLimit, token:otp}}
         const update_code = await usersModel.updateOne({email}, _update);
         if(update_code ){
@@ -23,17 +23,50 @@ const signup = async (req,res)=>{
             res.json({message:"Signed up successfully, Please verify your account",status:true})
         }
       } else if (err) {
-        if (err.keyPattern.email==1) {
+        if (err.keyPattern) {
+          if (err.keyPattern.email==1) {
             res.json({message:"Email Already Exist", status: false})
-        } else if (err.keyPattern.username==1) {
-          res.json({message:"Username Already Exist", status: false})
+          } else if (err.keyPattern.username==1) {
+            res.json({message:"Username Already Exist", status: false})
+          } else {
+            res.json({message:"Username Already Exist", status: false})
+          }
         } else {
-            res.json({message:err.message, status:false})
+          res.json({message:err.message, status:false})
         }
       }
     })
   } else {
     res.json({message:"All fields must be filled", status:false})
+  }
+}
+
+const sendOtp = async (req,res) =>{
+  let { email } = req.body;
+  const otp = Math.floor(Math.random()*90000) + 10000;
+  let currentDateObj = new Date();
+  let currentminute = currentDateObj.getTime();
+  let _otpTimeLimit = currentminute + 3 * 60000;
+
+  const check_user = await usersModel.findOne({email});
+  if (check_user) {
+      if (check_user.verified) {
+          return res.json({message:"User Already Verified", status:false})
+      }   
+      let verification = await mail({email,otp})
+      let _update = {$set:{expire_time:_otpTimeLimit, token:otp}}
+      const update_code = await usersModel.updateOne({email}, _update);
+
+      //condition to check if the update is true
+      if(update_code ){
+          res.json({message:verification, status:true})
+      }else{
+          res.json({message:"bad request",status:false})
+      }
+  } else if (check_user===null) {
+      res.json({message:"No user found", status:false})
+  } else{
+      res.json({message:"Invalid Email", status:false})
   }
 }
 
@@ -59,6 +92,7 @@ const verifyUser = (req,res) => {
     }
   })
 }
+
 const signin = (req,res) => {
   let {email, password} = req.body;
   usersModel.findOne({email}, async (err,result)=>{
@@ -82,10 +116,11 @@ const signin = (req,res) => {
     }
   })
 }
+
 const updateProfile =  async (req,res) => {
   let { username, photoURL } = req.body;
   if (!photoURL.length>0) {
     photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
   }
 }
-module.exports={signup, updateProfile, verifyUser, signin}
+module.exports={signup, updateProfile, verifyUser, signin, sendOtp}

@@ -17,7 +17,7 @@ mongoose.connect(URI, (err)=> {
 mongoose.Promise = global.Promise;
 
 app.get('/', (req,res) =>{
-    res.send("Hello")
+    res.json("Kelvin is a good boy")
 })
 app.use('/api', routes)
 

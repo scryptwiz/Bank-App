@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 require('dotenv').config()
 
-const mail = async ({data, otp}) => {
+const mail = async ({email, otp}) => {
     try {
         let mailTransporter = nodemailer.createTransport({
             service: 'gmail',
@@ -15,7 +15,7 @@ const mail = async ({data, otp}) => {
         })
         const mail ={
             from: process.env.EMAIL,
-            to: data,
+            to: email,
             subject: "Banka App Account Verification ✔",
             html: `Welcome to Bank App <br> Yout Verification code is sown below code: ${otp}`
         }
