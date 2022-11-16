@@ -34,10 +34,10 @@ export const Help = () => {
                             <input type="text" className='block w-full mt-1 text-sm border px-3 py-3 rounded border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='A decription of the screenshot (or video)' />
                         </div>
                         <button type='submit'
-                                        className="block w-full px-4 py-3 mt-4 text-base font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                                    >
-                                        Send Email
-                                    </button>
+                            className="block w-full px-4 py-3 mt-4 text-base font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                        >
+                            Send Email
+                        </button>
                     </div>
                 </main>
             </div>
