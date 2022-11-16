@@ -36,6 +36,7 @@ const signup = async (req,res)=>{
     res.json({message:"All fields must be filled", status:false})
   }
 }
+
 const verifyUser = (req,res) => {
   let id = req.params['id']
   usersModel.findById(id, (err)=>{
