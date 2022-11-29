@@ -1,6 +1,8 @@
-import React from 'react'
-import { Header } from '../../public/Header'
-import { Sidebar } from '../../public/Sidebar'
+import React from 'react';
+import { Header } from '../public/Header';
+import { Sidebar } from '../public/Sidebar';
+// import { IncomeChart } from './IncomeChart';
+
 
 export const Dashboard = () => {
   return (
@@ -467,7 +469,8 @@ export const Dashboard = () => {
                 <h4 className="mb-4 font-semibold text-gray-800 dark:text-gray-300">
                   Revenue
                 </h4>
-                <canvas id="pie"></canvas>
+                {/* <canvas id="pie"></canvas> */}
+                {/* <IncomeChart/> */}
                 <div
                   className="flex justify-center mt-4 space-x-3 text-sm text-gray-600 dark:text-gray-400"
                 >

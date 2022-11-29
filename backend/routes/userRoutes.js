@@ -1,13 +1,14 @@
 const express = require('express');
-const { userSignup, updateProfile, verifyUser, signin } = require('../controller/userController/profileController');
+const Auth = require('../controller/userController/profileController');
 // const { fetchTransaction, transferMoney } = require('../controller/userController/transactionController');
 const routes = express.Router()
 
 // User Route
-routes.post('/user/signup', userSignup)
-routes.get('/user/verifyUser/:id', verifyUser)
-routes.post('/user/updateProfile', updateProfile)
-routes.post('/user/signin', signin)
+routes.post('/user/signup', Auth.userSignup)
+routes.get('/user/send_otp', Auth.sendOtp)
+routes.get('/user/verify_otp', Auth.verify_otp)
+routes.post('/user/updateProfile', Auth.updateProfile)
+routes.post('/user/signin', Auth.signin)
 
 // user transaction routes
 // routes.post('/user/fetchTransaction', fetchTransaction)

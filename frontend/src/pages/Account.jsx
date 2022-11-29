@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { Header } from '../../public/Header'
-import { Sidebar } from '../../public/Sidebar'
+import React, { useState } from 'react';
+import { Header } from '../public/Header';
+import { Sidebar } from '../public/Sidebar';
 
 export const Account = () => {
     const [status, setStatus] = useState(false);

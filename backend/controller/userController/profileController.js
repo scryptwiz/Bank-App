@@ -111,6 +111,7 @@ const signin = (req,res) => {
     }
   })
 }
+
 const updateProfile =  async (req,res) => {
   let { username, photoURL } = req.body;
   if (!photoURL.length>0) {

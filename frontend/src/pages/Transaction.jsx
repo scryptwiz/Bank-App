@@ -1,9 +1,28 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Header } from '../../public/Header'
-import { Sidebar } from '../../public/Sidebar'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Header } from '../public/Header';
+import { Sidebar } from '../public/Sidebar';
 
 export const Transaction = () => {
+    const [menu, setMenu] = useState(false);
+    const [drawal, setDrawal] = useState(false);
+    const [title, setTitle] = useState(false);
+
+    const transfer = () => {
+        setDrawal(true);
+        setMenu(false);
+        setTitle('Transfer');
+    }
+    const withdraw = () => {
+        setDrawal(true);
+        setMenu(false);
+        setTitle('Withdraw');
+    }
+    const deposit = () => {
+        setDrawal(true);
+        setMenu(false);
+        setTitle('Deposit');
+    }
     return (
         <div className="flex h-screen bg-gray-50 dark:bg-gray-900">
             <Sidebar />
@@ -19,8 +38,8 @@ export const Transaction = () => {
                             </h2>
                             <span className='w-1 rounded h-7 mt-2 bg-purple-600'></span>
                             <div className='mt-2 flex gap-3'>
-                                <Link to="/dashboard"><span className='text-sm text-purple-600'> Dashboard</span></Link>
-                                <Link><span className='text-sm text-purple-600'> New Transaction</span></Link>
+                                <Link to="/dashboard"><span className='text-sm tcext-purple-600'> Dashboard</span></Link>
+                                {/* <Link><span className='text-sm text-purple-600'> New Transaction</span></Link> */}
                                 <Link to="/my-transactions"><span className='hidden md:flex text-sm mt-1'> Transaction</span></Link>
                             </div>
                         </div>
@@ -46,7 +65,7 @@ export const Transaction = () => {
                                     <p
                                         className="text-lg font-semibold text-gray-700 dark:text-gray-200"
                                     >
-                                        6262629087
+                                        24
                                     </p>
                                 </div>
                             </div>
@@ -180,7 +199,115 @@ export const Transaction = () => {
                                     </svg>
                                     <Link>Print</Link>
                                 </div>
-                                <div className='dark:text-gray-200 mt-2'><Link>New Transaction</Link></div>
+                                {/* <div className='dark:text-gray-200 mt-2'><Link>New Transaction</Link></div> */}
+                                <div className='relative inline-block'>
+                                    <button onClick={() => setMenu(!menu)} className='dark:text-gray-200 mt-2'><span> New Transaction</span></button>
+                                    {menu && <div className="absolute right-0 mt-3 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex="-1">
+                                        <div className="py-2 px-5" role="none">
+                                            <Link onClick={withdraw}><p className='text-gray-600 py-2 hover:text-purple-600 transition-all duration-500 ease'>Withdraw</p></Link>
+
+                                            <Link onClick={transfer}><p className='text-gray-600 py-2 hover:text-purple-600 transition-all duration-500 ease'>Transfer</p></Link>
+
+                                            <Link onClick={deposit}><p className='text-gray-600 py-2 hover:text-purple-600 transition-all duration-500 ease'>Deposit</p></Link>
+
+                                        </div>
+                                    </div>}
+
+                                </div>
+                                {drawal && <div className="absolute top-0 right-0 bg-black/60 dark:bg-black/50 w-full h-screen flex z-40 overflow-hidden">
+                                    {title === 'Withdraw' && <div className='w-3/12 transition-all ease-out duration-700 dark:bg-gray-100 bg-gray-50 h-full p-6 ml-auto z-40 flex flex-col gap-4'>
+                                        <div className='flex justify-between items-center mb-6'>
+                                            <h2 className='text-xl font-semibold'>{title} Money</h2>
+                                            <img onClick={() => setDrawal(false)} src="../assets/images/close.png" alt="" className="w-4 h-4 cursor-pointer" />
+                                        </div>
+                                        <div className='flex justify-between text-sm border-b border-gray-300 '>
+                                            <p className="text-gray-700 text-sm font-semibold dark:text-gray-700"> Witdraw From: </p>
+                                            <div className='flex flex-col gap-2 mb-3 text-right'>
+                                                <span>Fola</span>
+                                                <span>6262629087</span>
+                                            </div>
+                                        </div>
+                                        <form action="" className='flex flex-col gap-5 w-full px-5 py-6'>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Amount</label>
+                                                <input type="number" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='2000000' />
+                                            </div>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Reason For Withdraw</label>
+                                                <input type="text" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='Reasons for withdraw' />
+                                            </div>
+                                            <button type='submit'
+                                                className="block w-full px-4 py-3 mt-4 text-base font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                            >
+                                                Withdraw
+                                            </button>
+                                        </form>
+                                    </div>}
+                                    {title === 'Transfer' && <div className='w-3/12 transition-all ease-out duration-700 dark:bg-gray-100 bg-gray-50 h-full p-6 ml-auto z-40 flex flex-col gap-4'>
+                                        <div className='flex justify-between items-center mb-6'>
+                                            <h2 className='text-xl font-semibold'>{title} Money</h2>
+                                            <img onClick={() => setDrawal(false)} src="../assets/images/close.png" alt="" className="w-4 h-4 cursor-pointer" />
+                                        </div>
+                                        <div className='flex justify-between text-sm border-b border-gray-300 '>
+                                            <p className="text-gray-700 text-sm font-semibold dark:text-gray-700"> Transfer From: </p>
+                                            <div className='flex flex-col gap-2 mb-3 text-right'>
+                                                <span>Fola</span>
+                                                <span>6262629087</span>
+                                            </div>
+                                        </div>
+                                        <form action="" className='flex flex-col gap-5 w-full px-5 py-6'>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Beneficiary Account No</label>
+                                                <input type="number" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='34577899999' />
+                                            </div>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Beneficiary Account Name</label>
+                                                <input type="text" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='John Doe' />
+                                            </div>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Amount</label>
+                                                <input type="number" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='2000000' />
+                                            </div>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Reason For transfer</label>
+                                                <input type="text" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='Reasons for transfer' />
+                                            </div>
+                                            <button type='submit'
+                                                className="block w-full px-4 py-3 mt-4 text-base font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                            >
+                                                Transfer
+                                            </button>
+                                        </form>
+                                    </div>}
+                                    {title === 'Deposit' && <div className='w-3/12 transition-all ease-out duration-700 dark:bg-gray-100 bg-gray-50 h-full p-6 ml-auto z-40 flex flex-col gap-4'>
+                                        <div className='flex justify-between items-center mb-6'>
+                                            <h2 className='text-xl font-semibold'>{title} Money</h2>
+                                            <img onClick={() => setDrawal(false)} src="../assets/images/close.png" alt="" className="w-4 h-4 cursor-pointer" />
+                                        </div>
+                                        <div className='flex justify-between text-sm border-b border-gray-300 '>
+                                            <p className="text-gray-700 text-sm font-semibold dark:text-gray-700"> Deposit to: </p>
+                                            <div className='flex flex-col gap-2 mb-3 text-right'>
+                                                <span>Fola</span>
+                                                <span>6262629087</span>
+                                            </div>
+                                        </div>
+                                        <form action="" className='flex flex-col gap-5 w-full px-5 py-6'>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Amount</label>
+                                                <input type="number" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='2000000' />
+                                            </div>
+                                            <div className='flex flex-col gap-2'>
+                                                <label className="text-gray-700 text-sm font-semibold dark:text-gray-600"> Reason For Deposit</label>
+                                                <input type="text" className='block w-full mt-1 text-sm border px-3 py-3 rounded-lg border-purple-200 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple text-gray-500' placeholder='Reasons for deposit' />
+                                            </div>
+                                            <button type='submit'
+                                                className="block w-full px-4 py-3 mt-4 text-base font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                                            >
+                                                Deposit
+                                            </button>
+                                        </form>
+                                    </div>}
+                                </div>}
                             </div>
                         </div>
                         <div className="w-full overflow-hidden rounded-lg shadow-xs">

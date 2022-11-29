@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Header } from '../public/Header';
-import { Sidebar } from '../public/Sidebar';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Sidebar } from '../public/Sidebar';
+import { Header } from '../public/Header';
 
 export const Profile = () => {
     const [title, setTitle] = useState('account-information');
