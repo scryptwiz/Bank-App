@@ -8,9 +8,7 @@ require('dotenv').config()
 const userSignup = async (req,res)=> {
     let {username, email, password} = req.body;
     const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
-    if (!email || !password || !username) {
-      return res.status(401).json({message:"All fields must be filled", success:false})
-    }
+    if (!email || !password || !username || account_no) return res.status(401).json({message:"All fields must be filled", success:false})
 
     const _userinfo = new usersModel({username, email, account_no, password})
     try {
@@ -45,9 +43,9 @@ const sendOtp = async (req,res) =>{
   try {   
     const check_user = await usersModel.findOne({email});
     if (!check_user) {
-      return res.status(401).json({message:"user not found", success:"false"})
+      return res.status(401).json({message:"user not found", success:false})
     } else if (check_user.verified) {
-        return res.status(200).json({message:"user already verified", success:false})
+        return res.status(200).json({message:"user already verified", success:true})
     }
 
     let token = await Token.findOne({ userId: check_user._id });
@@ -58,7 +56,8 @@ const sendOtp = async (req,res) =>{
         }).save();
     }
 
-    await sendMail(email, otp, "Password reset");
+    console.log(token);
+    await sendMail(email, otp, "Bank-app email verification otp");
     res.json({message:"OTP sent to your mail", success:true});
   } catch (error) {
     res.json({message:"Failed to send otp", success:false});
@@ -68,16 +67,16 @@ const sendOtp = async (req,res) =>{
 const verify_otp = async(req,res) => {
   let {otp, id} = req.body
   try {
-      if (!otp) return res.status(401).json({message:"otp not provided", success: false});
+      if (!otp || !id) return res.status(401).json({message:"All information must be provided", success: false});
 
       const user = await usersModel.findById(id);
-      if (!user) return res.status(401).json({message:"Invalid ", success:false});
+      if (!user) return res.status(401).json({message:"Invalid user", success:false});
 
       const token = await Token.findOne({
           userId: user._id,
           token: otp,
       });
-      if (!token) return res.status(400).json({message:"Invalid token", success:false});
+      if (!token) return res.status(401).json({message:"Token not found", success:false});
 
       await usersModel.updateOne({ _id: user._id },{ $set: { verified: true } },{ new: true });
       await token.delete();
@@ -89,28 +88,6 @@ const verify_otp = async(req,res) => {
   }
 }
 
-const verifyUser = (req,res) => {
-  let id = req.params['id']
-  usersModel.findById(id, (err)=>{
-    if (err){
-      if (err.name==="CastError") {
-        res.json({message:"Invalid User", status:false})
-      } else {
-        res.json({message: err.message, status:false})
-      }
-    }
-    else{
-      usersModel.findByIdAndUpdate(`${id}`, {verified:true}, (err)=>{
-        if(err){
-          res.send({message:err.message, status:false})
-        }
-        else{
-          res.json({message:"Email Verified Successfully", status:true})
-        }
-      })
-    }
-  })
-}
 const signin = (req,res) => {
   let {email, password} = req.body;
   usersModel.findOne({email}, async (err,result)=>{
@@ -140,4 +117,4 @@ const updateProfile =  async (req,res) => {
     photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
   }
 }
-module.exports={userSignup, updateProfile, verifyUser, signin, sendOtp, verify_otp}
+module.exports={userSignup, updateProfile, signin, sendOtp, verify_otp}
