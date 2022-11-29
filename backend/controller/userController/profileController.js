@@ -90,26 +90,27 @@ const verify_otp = async(req,res) => {
 
 const signin = (req,res) => {
   let {email, password} = req.body;
-  usersModel.findOne({email}, async (err,result)=>{
-    if (err) {
-      res.json({message: 'Network Error', status: false, err})
-    } else if (result) {
-      let validatePassword = await bcrypt.compare(password, result.password)
-      if(validatePassword){
-        jwt.sign({email}, process.env.JWT_SECRET, { expiresIn: "2h" }, (err, token)=>{
-            if(err){
-                {err.message=="jwt expired"? res.json({message: "Session timed out, kindly login again", status: false}) : res.json({message:err.message, status:false})}
-            } else {
-                res.json({message:"Login Succesfully", token, result , status: true})
-            }
-          })
-      } else {
-        res.json({message: "Incorrect Password", status: false})
-      }
-    } else if (result==null) {
-      res.json({message: "Email not registered", status:false})
-    }
-  })
+  if (!email || !password) return res.status(401).json({message:"All fields must be filled", success:false})
+  // usersModel.findOne({email}, async (err,result)=>{
+  //   if (err) {
+  //     res.json({message: 'Network Error', status: false, err})
+  //   } else if (result) {
+  //     let validatePassword = await bcrypt.compare(password, result.password)
+  //     if(validatePassword){
+  //       jwt.sign({email}, process.env.JWT_SECRET, { expiresIn: "2h" }, (err, token)=>{
+  //           if(err){
+  //               {err.message=="jwt expired"? res.json({message: "Session timed out, kindly login again", status: false}) : res.json({message:err.message, status:false})}
+  //           } else {
+  //               res.json({message:"Login Succesfully", token, result , status: true})
+  //           }
+  //         })
+  //     } else {
+  //       res.json({message: "Incorrect Password", status: false})
+  //     }
+  //   } else if (result==null) {
+  //     res.json({message: "Email not registered", status:false})
+  //   }
+  // })
 }
 
 const updateProfile =  async (req,res) => {
