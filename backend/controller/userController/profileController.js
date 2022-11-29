@@ -1,56 +1,94 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const nodemailer = require("nodemailer");
+const sendMail = require("../mail");
 const usersModel = require("../../models/usersModel");
+const Token = require("../../models/tokenSchema");
 require('dotenv').config()
 
-const signup = async (req,res)=>{
-  let { username, email, password }=req.body;
-  let mailTransporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: "smtp.gmail.com",
-    auth: {
-      user:process.env.EMAIL,
-      pass:process.env.PASS
+const userSignup = async (req,res)=> {
+    let {username, email, password} = req.body;
+    const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
+    if (!email || !password || !username) {
+      return res.status(401).json({message:"All fields must be filled", success:false})
     }
-  })
-  const account_no = Math.floor(10000000000 + Math.random() * 90000000000)
-  if (email&&password&&account_no) {
-    const signup = new usersModel({username, email, account_no, password})
-    signup.save((err,result)=>{
-      if(!err) {
-        let verificationLink = `http://localhost:2600/api/user/verifyUser/${result._id}`
-        try {
-          mailTransporter.sendMail({
-            from: "Banka App",
-            to: `${email}`,
-            subject: "Banka App Account Verification ✔",
-            text: "Here is your verification link",
-            html: `<a href=${verificationLink}>Verify Your Email</a>`,
-          }, function(error){
-            if (error) {
-              res.json({message:"Signed Up Successfully make sure you verify your email", status: true});
-            } else {
-                res.json({message:"Signed Up Successfully A Mail Has Been Sent To You!" ,status: true});
-            }
-          });
-        } catch(err){
-          res.json({message:err.message, status: false});
-        }
-    } else if (err) {
-        if (err.keyPattern.email==1) {
-            res.json({message:"Email Already Exist", status: false})
-        } else if (err.keyPattern.username==1) {
-          res.json({message:"Username Already Exist", status: false})
-        } else {
-            res.json({message:err.message, status:false})
-        }
+
+    const _userinfo = new usersModel({username, email, account_no, password})
+    try {
+      const _createuser = await _userinfo.save()
+      if (!_createuser) {
+        throw new Error(JSON.stringify({
+          message: "Failed signup",
+          status: 401
+        }))
+      }
+
+      res.json({
+        payload: "user created successfully",
+        error: null,
+        success: true,
+      })
+    } catch (error) {
+      const { message, status } = JSON.parse(error.message)
+
+      res.status(status||500).json({
+        success: false,
+        payload: null,
+        error: message
+      })
     }
-    })
-  } else {
-    res.json({message:"All fields must be filled", status:false})
+}
+
+const sendOtp = async (req,res) =>{
+  let { email } = req.body;
+  const otp = Math.floor(Math.random()*90000) + 10000;
+
+  try {   
+    const check_user = await usersModel.findOne({email});
+    if (!check_user) {
+      return res.status(401).json({message:"user not found", success:"false"})
+    } else if (check_user.verified) {
+        return res.status(200).json({message:"user already verified", success:false})
+    }
+
+    let token = await Token.findOne({ userId: check_user._id });
+    if (!token) {
+        token = await new Token({
+            userId: check_user._id,
+            token: otp,
+        }).save();
+    }
+
+    await sendMail(email, otp, "Password reset");
+    res.json({message:"OTP sent to your mail", success:true});
+  } catch (error) {
+    res.json({message:"Failed to send otp", success:false});
   }
 }
+
+const verify_otp = async(req,res) => {
+  let {otp, id} = req.body
+  try {
+      if (!otp) return res.status(401).json({message:"otp not provided", success: false});
+
+      const user = await usersModel.findById(id);
+      if (!user) return res.status(401).json({message:"Invalid ", success:false});
+
+      const token = await Token.findOne({
+          userId: user._id,
+          token: otp,
+      });
+      if (!token) return res.status(400).json({message:"Invalid token", success:false});
+
+      await usersModel.updateOne({ _id: user._id },{ $set: { verified: true } },{ new: true });
+      await token.delete();
+
+      res.json({message:"Account verified successfully.", success:true});
+  } catch (error) {
+      res.json({message:"An error occurred", success:false});
+      console.log(error);
+  }
+}
+
 const verifyUser = (req,res) => {
   let id = req.params['id']
   usersModel.findById(id, (err)=>{
@@ -102,4 +140,4 @@ const updateProfile =  async (req,res) => {
     photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
   }
 }
-module.exports={signup, updateProfile, verifyUser, signin}
+module.exports={userSignup, updateProfile, verifyUser, signin, sendOtp, verify_otp}
