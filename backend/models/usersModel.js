@@ -36,12 +36,6 @@ const userSchema = new Schema({
         type:Boolean,
         required: true,
         default:false
-    }, token:{
-        type: String,
-        createdAt:{type: Date, expires: '2m', default: Date.now }
-    }, expire_time:{
-        type:Number,
-        required:true
     }
 }, { timestamps: true });
 
