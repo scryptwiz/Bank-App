@@ -108,4 +108,11 @@ const updateProfile =  async (req,res) => {
     return res.status(200).json({message:"Profile updated", success:true, error:null})
   })
 }
-module.exports={register, updateProfile, login, sendOtp, verify_otp}
+
+const fileUpload = async(req,res) => {
+  if (!req.file) return res.status(302).json({ message: "Failed to upload file", status: false })
+
+  return res.status(200).json({ message: "File Uploaded", status: true })
+}
+
+module.exports={register, updateProfile, login, sendOtp, verify_otp, fileUpload}
