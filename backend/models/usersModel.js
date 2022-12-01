@@ -18,6 +18,38 @@ const userSchema = new Schema({
         default: '',
         require: true
     },
+    first_name: {
+        type:String,
+        default: '',
+    },
+    last_name: {
+        type:String,
+        default: '',
+    },
+    phone_number: {
+        type:String,
+        default: '',
+    },
+    state: {
+        type:String,
+        default: '',
+    },
+    dob: {
+        type:String,
+        default: '',
+    },
+    country: {
+        type:String,
+        default: '',
+    },
+    address: {
+        type:String,
+        default: '',
+    },
+    gender: {
+        type:String,
+        default: '',
+    },
     password:{
         type: String,
         required: true

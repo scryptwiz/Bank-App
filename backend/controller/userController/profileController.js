@@ -97,7 +97,15 @@ const login = (req,res) => {
 }
 
 const updateProfile =  async (req,res) => {
-  let { phone_number, state, dob, country, address, gender } = req.body;
-  
+  let { first_name, last_name, phone_number, state, dob, country, address, gender } = req.body;
+  let id = req.uid
+  if (!first_name || !last_name || !phone_number || !state || !dob || !country || !address || !gender) return res.status(401).json({message:"All fields must be filled", success:false})
+
+  usersModel.updateOne({_id:id}, { first_name, last_name, phone_number, state, dob, country, address, gender }, (err, result) => {
+    if(!result) return res.status(403).json({message:"Unable to update user info", success:false})
+    if(err) return res.status(503).json({message:"Service unavailable", success:false})
+
+    return res.status(200).json({message:"Profile updated", success:true, error:null})
+  })
 }
 module.exports={register, updateProfile, login, sendOtp, verify_otp}
