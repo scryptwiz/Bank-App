@@ -110,9 +110,15 @@ const updateProfile =  async (req,res) => {
 }
 
 const fileUpload = async(req,res) => {
+  let id = req.uid
   if (!req.file) return res.status(302).json({ message: "Failed to upload file", status: false })
+  
+  usersModel.updateOne({_id:id}, { profileImage:req.file.path }, (err, result) => {
+    if(!result) return res.status(403).json({message:"User not found", success:false})
+    if(err) return res.status(503).json({message:"Service unavailable", success:false})
 
-  return res.status(200).json({ message: "File Uploaded", status: true })
+    return res.status(200).json({ message: "File Uploaded", status: true, error: null })
+  })
 }
 
 module.exports={register, updateProfile, login, sendOtp, verify_otp, fileUpload}
