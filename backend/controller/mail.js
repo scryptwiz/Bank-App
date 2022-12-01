@@ -10,7 +10,7 @@ const sendMail = async ({email, otp, subject}) =>{
             secure: true,
             auth: {
                 user:process.env.EMAIL,
-                pass:process.env.PASSWORD,
+                pass:process.env.PASS,
             },
         });
         const mail = {

@@ -45,8 +45,7 @@ const sendOtp = async (req,res) =>{
         }).save();
     }
 
-    console.log(token);
-    await sendMail(email, otp, "Bank-app email verification otp");
+    await sendMail({email, otp:token.token, subject:"Bank-app email verification otp"});
     res.json({message:"OTP sent to your mail", success:true});
   } catch (error) {
     res.json({message:"Failed to send otp", success:false});
@@ -54,12 +53,14 @@ const sendOtp = async (req,res) =>{
 }
 
 const verify_otp = async(req,res) => {
-  let {otp, id} = req.body
+  let {otp} = req.body
+  let id = req.uid
   try {
       if (!otp || !id) return res.status(401).json({message:"All information must be provided", success: false});
 
       const user = await usersModel.findById(id);
       if (!user) return res.status(401).json({message:"Invalid user", success:false});
+      if (user.verified) return res.status(200).json({message:"Account verified already", success:true});
 
       const token = await Token.findOne({
           userId: user._id,
@@ -96,9 +97,7 @@ const login = (req,res) => {
 }
 
 const updateProfile =  async (req,res) => {
-  let { username, photoURL } = req.body;
-  if (!photoURL.length>0) {
-    photoURL="https://drive.google.com/file/d/1LaDdvgUbRKT_Z_DCMm2Hy9XfMzCQJz2E/view"
-  }
+  let { phone_number, state, dob, country, address, gender } = req.body;
+  
 }
 module.exports={register, updateProfile, login, sendOtp, verify_otp}
