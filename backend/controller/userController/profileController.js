@@ -19,7 +19,7 @@ const register = async (req,res)=> {
         success: true,
       })
     }).catch(err=> {
-      if (err.keypattern) res.status(500).json({success: false,payload: null,error: "your email and username has to be unique"})
+      if (err.keyPattern) res.status(500).json({success: false,payload: null,error: "Email and username must be unique"})
 
       res.status(500).json({success: false,payload: null,error: "unexpected error"})
     })

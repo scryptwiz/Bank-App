@@ -2,11 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const transactionSchema = new Schema ({
-    senderAccNo: {
+    reference_no: {
+        type:String,
+        required: true,
+        unique:true
+    },
+    users_id: {
+        type: Array,
+        required: true,
+    },
+    sender_acc_no: {
         type:String,
         required: true
     },
-    recipientAccNo: {
+    recipient_acc_no: {
         type:String,
         required:true
     },
@@ -14,7 +23,7 @@ const transactionSchema = new Schema ({
         type:String,
         required: true
     },
-    reference:{
+    note: {
         type:String,
         required: true
     }
