@@ -1,5 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
-const transactionsModel = require('../../models/transactionaModel');
+const transactionsModel = require('../../models/transactionModel');
 const usersModel = require('../../models/usersModel');
 
 const find_recipient = async (req,res) => {
@@ -38,4 +38,14 @@ const transferMoney = async (req,res) => {
     }
 }
 
-module.exports = {find_recipient,transferMoney}
+const transaction_history = async (req,res) => {
+    let id = req.uid;
+    try {
+        let user_transactions = await transactionsModel.find({ users_id: { $in: [id] },})
+        res.status(200).json({ message:"Transaction Fetched", transactions:user_transactions, success:true });
+    } catch (error) {
+        res.status(500).json({ message:"An error occurred", success:false });
+    }
+}
+
+module.exports = { find_recipient, transferMoney, transaction_history }

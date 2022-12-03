@@ -16,5 +16,6 @@ routes.post('/user/fileUpload', [verifyToken, upload.single("picture")], Auth.fi
 // user transaction routes
 routes.post('/user/find_recipient', verifyToken, Transaction.find_recipient)
 routes.post('/user/transfer', verifyToken ,Transaction.transferMoney)
+routes.post('/user/fetch_transaction', verifyToken ,Transaction.transaction_history)
 
 module.exports={routes}
