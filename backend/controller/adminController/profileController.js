@@ -1,5 +1,6 @@
 const adminsModel = require("../../models/adminsModel");
 const Token = require("../../models/tokenSchema");
+const sendMail = require("../mail");
 
 const register = async (req,res)=> {
     let {username, email, password, first_name, last_name} = req.body;
@@ -14,6 +15,7 @@ const register = async (req,res)=> {
         success: true,
       })
     }).catch(err=> {
+      console.log(err.message);
       if (err.keyPattern) res.status(500).json({success: false,payload: null,error: "Email and username must be unique"})
 
       res.status(500).json({success: false,payload: null,error: "unexpected error"})
@@ -43,6 +45,7 @@ const sendOtp = async (req,res) =>{
       await sendMail({email, otp:token.token, subject:"Bank-app admin mail verification otp"});
       res.json({message:"OTP sent to your mail", success:true});
     } catch (error) {
+      console.log(error.message);
       res.json({message:"Failed to send otp", success:false});
     }
 }
