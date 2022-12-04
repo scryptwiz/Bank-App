@@ -24,5 +24,6 @@ routes.post('/admin/register', AdminAuth.register)
 routes.post('/admin/send_otp', AdminAuth.sendOtp)
 routes.post('/user/login', AdminAuth.login)
 routes.post('/user/verify_otp', verifyToken, AdminAuth.verify_otp)
+routes.post('/user/verify_otp', [verifyToken, upload.single("picture")], AdminAuth.fileUpload)
 
 module.exports={routes}

@@ -95,4 +95,16 @@ const login = (req,res) => {
   })
 }
 
-module.exports = {register,sendOtp,verify_otp,login}
+const fileUpload = async(req,res) => {
+  let id = req.uid
+  if (!req.file) return res.status(302).json({ message: "Failed to upload file", status: false })
+  
+  adminsModel.updateOne({_id:id}, { profileImage:req.file.path }, (err, result) => {
+    if(!result) return res.status(403).json({message:"Admin not found", success:false})
+    if(err) return res.status(503).json({message:"Service unavailable", success:false})
+
+    return res.status(200).json({ message: "File Uploaded", status: true, error: null })
+  })
+}
+
+module.exports = {register,sendOtp,verify_otp,login,fileUpload}
