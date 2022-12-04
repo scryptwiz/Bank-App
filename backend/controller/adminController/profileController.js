@@ -1,6 +1,8 @@
 const adminsModel = require("../../models/adminsModel");
 const Token = require("../../models/tokenSchema");
 const sendMail = require("../mail");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const register = async (req,res)=> {
     let {username, email, password, first_name, last_name} = req.body;
@@ -75,4 +77,22 @@ const verify_otp = async (req,res) => {
     }
 }
 
-module.exports = {register,sendOtp,verify_otp}
+const login = (req,res) => {
+  let {email, password} = req.body;
+  if (!email || !password) return res.status(401).json({message:"All fields must be filled", success:false})
+  adminsModel.findOne({email}, async (err,result)=>{
+    if (err) return res.status(500).json({message: 'An error occurred', success: false})
+
+    if (!result) return res.status(401).json({message: 'Invalid credential', success: false})
+
+    let validatePassword = await bcrypt.compare(password, result.password)
+    if(!validatePassword) return res.status(401).json({message: "Invalid credential", success: false})
+
+    const token = jwt.sign({ id: result.id }, process.env.APP_KEY_JWT, { expiresIn: '30m' });
+    if (!token) return res.status(503).json({message:"Error generating access token", success:false})
+
+    res.status(200).json({message:"Welcome to Banka", token, success:true })
+  })
+}
+
+module.exports = {register,sendOtp,verify_otp,login}

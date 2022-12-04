@@ -22,5 +22,7 @@ routes.post('/user/fetch_transaction', verifyToken ,Transaction.transaction_hist
 // Admin Route
 routes.post('/admin/register', AdminAuth.register)
 routes.post('/admin/send_otp', AdminAuth.sendOtp)
+routes.post('/user/login', AdminAuth.login)
+routes.post('/user/verify_otp', verifyToken, AdminAuth.verify_otp)
 
 module.exports={routes}
