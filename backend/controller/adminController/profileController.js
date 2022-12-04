@@ -107,4 +107,8 @@ const fileUpload = async(req,res) => {
   })
 }
 
-module.exports = {register,sendOtp,verify_otp,login,fileUpload}
+const block_user = async (req,res) => {
+  
+}
+
+module.exports = {register,sendOtp,verify_otp,login,fileUpload,block_user}
