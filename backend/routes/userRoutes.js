@@ -28,7 +28,7 @@ routes.post('/admin/verify_otp', verifyToken, AdminAuth.verify_otp)
 routes.post('/admin/upload_pics', [verifyToken, upload.single("picture")], AdminAuth.fileUpload)
 
 // Admin Transaction Route
-routes.post('/admin/fetch_transaction', verifyToken, AdminTransactions.transaction_history)
-routes.post('/admin/fetch_transaction/:reference', verifyToken, AdminTransactions.find_transaction)
+routes.get('/admin/fetch_transaction', verifyToken, AdminTransactions.transaction_history)
+routes.get('/admin/fetch_transaction/:reference', verifyToken, AdminTransactions.find_transaction)
 
 module.exports={routes}
