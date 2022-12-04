@@ -23,12 +23,12 @@ routes.post('/user/fetch_transaction', verifyToken ,Transaction.transaction_hist
 // Admin Auth Route
 routes.post('/admin/register', AdminAuth.register)
 routes.post('/admin/send_otp', AdminAuth.sendOtp)
-routes.post('/user/login', AdminAuth.login)
-routes.post('/user/verify_otp', verifyToken, AdminAuth.verify_otp)
-routes.post('/user/verify_otp', [verifyToken, upload.single("picture")], AdminAuth.fileUpload)
+routes.post('/admin/login', AdminAuth.login)
+routes.post('/admin/verify_otp', verifyToken, AdminAuth.verify_otp)
+routes.post('/admin/upload_pics', [verifyToken, upload.single("picture")], AdminAuth.fileUpload)
 
 // Admin Transaction Route
-routes.post('/user/fetch_transaction', verifyToken, AdminTransactions.transaction_history)
-routes.post('/user/fetch_transaction/:reference', verifyToken, AdminTransactions.find_transaction)
+routes.post('/admin/fetch_transaction', verifyToken, AdminTransactions.transaction_history)
+routes.post('/admin/fetch_transaction/:reference', verifyToken, AdminTransactions.find_transaction)
 
 module.exports={routes}
