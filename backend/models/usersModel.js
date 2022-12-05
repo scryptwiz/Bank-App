@@ -68,6 +68,11 @@ const userSchema = new Schema({
         type:Boolean,
         required: true,
         default:false
+    },
+    disabled:{
+        type:Boolean,
+        required: true,
+        default:false
     }
 }, { timestamps: true });
 

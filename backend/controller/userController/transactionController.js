@@ -9,6 +9,7 @@ const find_recipient = async (req,res) => {
     try {
         const sender = await usersModel.findById({_id:id})
         if (!sender) return res.status(401).json({message:"Sender not found", success:false})
+        if (sender.disabled) return res.status(401).json({message:"Your account has been disabled, You can check your mail to see the reason why your account has been disabled.", success:false})
         if (sender.account_no==recipient_acc_no) return res.status(403).json({message:"You can't fund yourself!", success:false})
         
         try {
